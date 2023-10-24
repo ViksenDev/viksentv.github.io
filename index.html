@@ -3,7 +3,7 @@
 <head>
   <title>VATSIM Flights in Russia</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <style> 
+<style> 
   body { 
     background-color: #f9f9f9; 
     color: #333;
@@ -22,7 +22,7 @@
     font-size: 2rem;
   }
 
-  .flights-table { 
+  .flights-table, .controllers-table { 
     width: 90%; 
     margin: 20px auto; 
     table-layout: fixed; 
@@ -30,7 +30,7 @@
     box-shadow: 0 2px 15px rgba(0,0,0,0.1);
   }
 
-  .flights-table th, .flights-table td { 
+  .flights-table th, .flights-table td, .controllers-table th, .controllers-table td { 
     border: 1px solid #ccc; 
     padding: 15px; 
     text-align: left; 
@@ -39,8 +39,8 @@
     white-space: nowrap; 
     cursor: pointer;
   } 
-  
-  .flights-table caption { 
+
+  .flights-table caption, .controllers-table caption { 
     border: 1px solid #ccc; 
     padding: 15px; 
     text-align: center; 
@@ -51,21 +51,25 @@
     cursor: pointer;
   } 
 
-  .flights-table th { 
+  .flights-table th, .controllers-table th { 
     background-color: #555; 
     color: #fff; 
   } 
   
-  .flights-table caption { 
+  .flights-table caption, .controllers-table caption { 
     background-color: #555; 
     color: #fff; 
   } 
 
-  .flights-table tr:nth-child(even) { 
+  .flights-table tr:nth-child(even), .controllers-table tr:nth-child(even) { 
     background-color: #f2f2f2;
   }
-  
-    .flights-stats {
+
+  .flights-table tr:hover, .controllers-table tr:hover {
+    background-color: #ddd;
+  }
+
+  .flights-stats {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -82,26 +86,30 @@
     font-size: 20px;
     margin: 0;
   }
-  
-  .flights-table tr:hover {
-    background-color: #ddd;
-  }
 
   .alert {
     color: red;
     text-align: center;
     font-size: 1.2rem;
   }
-  </style>
+</style>
 </head>
 <body>
   <h1>VATSIM Flights in Russia</h1>
-  <img src="https://vatrus.info/img/design/vatrus_short_logo_vector_small.webp" alt="VATSIM Logo" />
-  <div id="stats-container"></div>
-  <div id="flights-container"></div>
+
+<div id="tables-container">
+    <div id="stats-container"></div>
+    <div id="controllers-container"></div>
+</div>
+<div id="flights-container"></div>  
   <script>
     $(document).ready(function() {
-      var flightsData = []; // сохраняем данные о полетах
+      var flightsData = [];
+	  var sortDirectionControllers = {
+  name: 'asc',
+  callsign: 'asc',
+  frequency: 'asc'
+};
       var sortDirection = {
         name: 'asc',
         callsign: 'asc',
@@ -110,18 +118,57 @@
         aircraft_short: 'asc',
         groundspeed: 'asc'
       };
+      var lastSortedBy = null;  // последним добавили эту переменную
 
-      function getFlightsData() {
-		  return $.get('https://data.vatsim.net/v3/vatsim-data.json').then(function(data) {
-			  flightsData = data.pilots;
-			  if (flightsData.length > 0) {
-				filterFlightsByAirport();
-			  } else {
-				$('<p>').text('No flights found.').addClass('alert').appendTo('#flights-container');
-			  }
-			  return flightsData;
-		  });
-	  }
+var controllersData = [];
+
+function getFlightsData() { 
+  return $.get('https://data.vatsim.net/v3/vatsim-data.json').then(function(data) {
+    flightsData = data.pilots;
+    controllersData = data.controllers; // добавлено
+    if (flightsData.length > 0 || controllersData.length > 0) { // изменено
+      filterFlightsByAirport();
+      filterControllersByPrefix();
+    } else {
+      $('<p>').text('No flights or controllers found.').addClass('alert').appendTo('#flights-container');
+    }
+    return [flightsData, controllersData]; // изменено
+  });
+}
+
+// функция для отбора У-диспетчеров
+function filterControllersByPrefix() {
+  controllersData = controllersData.filter(function(controller) {
+    return controller.callsign.startsWith('U');
+  });
+}
+
+// Добавить данные в другую сторону таблицы
+function renderControllersTable() {
+  var table = $('<table>').addClass('controllers-table');
+  var tableHeader = $('<tr>');
+  $('<th>').text('Name').appendTo(tableHeader);
+  $('<th>').text('Callsign').appendTo(tableHeader);
+  $('<th>').text('Frequency').appendTo(tableHeader);
+  
+  tableHeader.appendTo(table);
+
+  for (var i = 0; i < controllersData.length; i++) {
+    var controller = controllersData[i];
+    var row = $('<tr>');
+    $('<td>').text(controller.name).appendTo(row);
+    $('<td>').text(controller.callsign).appendTo(row);
+    $('<td>').text(controller.frequency).appendTo(row);
+    row.appendTo(table);
+  }
+  $('#controllers-container').empty().append(table);
+}
+// In your ready function adjust this part
+getFlightsData().then(function() {
+  renderStats();
+  renderTable();
+  renderControllersTable(); // add this line
+});
 
 	  // Call the function every 15 seconds
 	  setInterval(function() {
@@ -140,13 +187,11 @@
         });
       }
 
-      function renderStats() {
-    var totalPilots = flightsData.length;
 
-    // Создайте объект для подсчета количества пилотов в авиакомпаниях
+function renderStats() {
+    var totalPilots = flightsData.length;
     var airlinePilots = {};
 
-    // Переберите данные о полетах и подсчитайте количество пилотов для каждой авиакомпании
     flightsData.forEach(function (flight) {
         var airlineCode = flight.callsign.substring(0, 3);
         if (airlinePilots[airlineCode]) {
@@ -156,57 +201,63 @@
         }
     });
 
-    // Получите топ-3 авиакомпаний по количеству пилотов
     var topAirlines = Object.entries(airlinePilots)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 3)
         .map(([airline, count]) => airline + ' (' + count + ' pilots)');
 
-    var allAirports = flightsData.map(function (flight) {
-    return [flight.flight_plan.departure, flight.flight_plan.arrival];
-  });
+    var allAirports = { departures: {}, arrivals: {} };
 
-  var airportCounts = {};
+    flightsData.forEach(function (flight) {
+        var departureAirport = flight.flight_plan.departure;
+        var arrivalAirport = flight.flight_plan.arrival;
 
-  // Count the occurrence of each airport in the departure and arrival lists
-  allAirports.forEach(function (airports) {
-    airports.forEach(function (airport) {
-      airportCounts[airport] = (airportCounts[airport] || 0) + 1;
+        allAirports.departures[departureAirport] = (allAirports.departures[departureAirport] || 0) + 1;
+        allAirports.arrivals[arrivalAirport] = (allAirports.arrivals[arrivalAirport] || 0) + 1;
     });
-  });
 
-  // Convert the airportCounts object into an array of [airport, count] pairs
-  var airportCountArray = Object.keys(airportCounts).map(function (airport) {
-    return [airport, airportCounts[airport]];
-  });
+    function top3Dict(dict) {
+        return Object.entries(dict)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 3)
+            .map(([airport, count]) => `${airport} (${count} pilots)`);
+    }
 
-  // Sort the airportCountArray in descending order based on the count
-  airportCountArray.sort(function (a, b) {
-    return b[1] - a[1];
-  });
+    var top3DepartureAirports = top3Dict(allAirports.departures);
+    var top3ArrivalAirports = top3Dict(allAirports.arrivals);
 
-  // Get the top 3 airports
-  var top3Airports = airportCountArray.slice(0, 3).map(function (pair) {
-    return pair[0];
-  });
-    var top3Aircrafts = getTop3(flightsData.map(function (flight) { return flight.flight_plan.aircraft_short; }));
+    var aircraftsCounts = {};
+
+    flightsData.forEach(function (flight) {
+        var aircraft = flight.flight_plan.aircraft_short;
+
+        // Преобразуйте A20N в A320
+        if (aircraft === 'A20N') {
+            aircraft = 'A320';
+        }
+
+        aircraftsCounts[aircraft] = (aircraftsCounts[aircraft] || 0) + 1;
+    });
+
+    var top3Aircrafts = Object.entries(aircraftsCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3)
+        .map(([aircraft, count]) => `${aircraft} (${count} pilots)`);
 
     var stats = $('<div>').addClass('flights-stats');
     $('<h2>').text('Flight Statistics').appendTo(stats);
     $('<p>').text('Total pilots: ' + totalPilots).appendTo(stats);
-    $('<p>').text('Top 3 airports: ' + top3Airports.join(', ')).appendTo(stats);
-    $('<p>').text('Top 3 aircrafts: ' + top3Aircrafts.join(', ')).appendTo(stats);
+    $('<p>').text('Top 3 departure airports: ' + top3DepartureAirports.join(', ')).appendTo(stats);
+    $('<p>').text('Top 3 arrival airports: ' + top3ArrivalAirports.join(', ')).appendTo(stats);
     $('<p>').text('Top 3 airlines by pilots: ' + topAirlines.join(', ')).appendTo(stats);
+    $('<p>').text('Top 3 aircrafts by pilots: ' + top3Aircrafts.join(', ')).appendTo(stats);
 
     $('#stats-container').empty().append(stats);
 }
 
 setInterval(renderStats, 5000);
 
-	  
 
-	
-	
 	
       function getTop3(array) {
   var counts = {};
@@ -224,62 +275,81 @@ setInterval(renderStats, 5000);
 }
 
 
-      function renderTable() {
-		var table = $('<table>').addClass('flights-table');
-		var caption = $('<caption>').text('Flights'); // Замените 'Список рейсов' на желаемый заголовок
-		table.append(caption);
-        var tableHeader = $('<tr>');
-        $('<th>').text('Pilot').click(sortTableBy('name')).appendTo(tableHeader);
-        $('<th>').text('Callsign').click(sortTableBy('callsign')).appendTo(tableHeader);
-        $('<th>').text('Departure').click(sortTableBy('departure')).appendTo(tableHeader);
-        $('<th>').text('Arrival').click(sortTableBy('arrival')).appendTo(tableHeader);
-        $('<th>').text('Aircraft').click(sortTableBy('aircraft_short')).appendTo(tableHeader);
-        $('<th>').text('Groundspeed').click(sortTableBy('groundspeed')).appendTo(tableHeader);
-		$('<th>').text('Transponder').click(sortTableBy('transponder')).appendTo(tableHeader);
-		$('<th>').text('Altitude').click(sortTableBy('altitude')).appendTo(tableHeader);
-        tableHeader.appendTo(table);
+function renderTable() {
+  $('#flights-container').empty(); // очистить контейнер перед рисованием новой таблицы
+  var table = $('<table>').addClass('flights-table');
+    var caption = $('<caption>').text('Flights'); // Замените 'Список рейсов' на желаемый заголовок
+    table.append(caption);
+    var tableHeader = $('<tr>');
+    $('<th>').text('Pilot').click(sortTableBy('name')).appendTo(tableHeader);
+    $('<th>').text('Callsign').click(sortTableBy('callsign')).appendTo(tableHeader);
+    $('<th>').text('Departure').click(sortTableBy('departure')).appendTo(tableHeader);
+    $('<th>').text('Arrival').click(sortTableBy('arrival')).appendTo(tableHeader);
+    $('<th>').text('Aircraft').click(sortTableBy('aircraft_short')).appendTo(tableHeader);
+    $('<th>').text('Groundspeed').click(sortTableBy('groundspeed')).appendTo(tableHeader);
+    $('<th>').text('Transponder').click(sortTableBy('transponder')).appendTo(tableHeader);
+    $('<th>').text('Altitude').click(sortTableBy('altitude')).appendTo(tableHeader);
+    tableHeader.appendTo(table);
 
-        for (var i = 0; i < flightsData.length; i++) {
-          var flight = flightsData[i];
-          if (flight.flight_plan && flight.flight_plan.departure && flight.flight_plan.arrival && flight.flight_plan.aircraft_short) {
-            var row = $('<tr>').appendTo(table);
-            $('<td>').text(flight.name).appendTo(row);
-            $('<td>').text(flight.callsign).appendTo(row);
-            $('<td>').text(flight.flight_plan.departure).appendTo(row);
-            $('<td>').text(flight.flight_plan.arrival).appendTo(row);
-            $('<td>').text(flight.flight_plan.aircraft_short).appendTo(row);
-            $('<td>').text(flight.groundspeed).appendTo(row);
-			$('<td>').text(flight.transponder).appendTo(row);
-			$('<td>').text(flight.altitude).appendTo(row);
-          }
+    for (var i = 0; i < flightsData.length; i++) {
+      var flight = flightsData[i];
+      if (flight.flight_plan && flight.flight_plan.departure && flight.flight_plan.arrival && flight.flight_plan.aircraft_short) {
+        var row = $('<tr>');
+        // Добавляем условие, что если транспондер равен 2200, тогда добавляем к строке класс .red-highlight
+        if (flight.transponder === "7700") {
+          row.addClass('red-highlight');
         }
-        table.appendTo('#flights-container');
+        $('<td>').text(flight.name.replace(/\b[A-Z]{4}\b/g, '').trim()).appendTo(row);
+        $('<td>').text(flight.callsign).appendTo(row);
+        $('<td>').text(flight.flight_plan.departure).appendTo(row);
+        $('<td>').text(flight.flight_plan.arrival).appendTo(row);
+
+        var aircraft = flight.flight_plan.aircraft_short; // преобразование A20N в A320
+        if (aircraft === 'A20N') {
+          aircraft = 'A320';
+        }
+        $('<td>').text(aircraft).appendTo(row);
+
+        $('<td>').text(flight.groundspeed).appendTo(row);
+        $('<td>').text(flight.transponder).appendTo(row);
+        $('<td>').text(flight.altitude).appendTo(row);
+        row.appendTo(table);
       }
+    }
+    table.appendTo('#flights-container');
+}
+
 	  
 	  
 	  
-      function sortTableBy(property) {
+function sortTableBy(property) {
         return function() {
           sortDirection[property] = sortDirection[property] === 'asc' ? 'desc' : 'asc';
+          lastSortedBy = property;  // сохранение свойства последней сортировки
 
-          flightsData.sort(function(a, b) {
-            var valueA = property === 'departure' || property === 'arrival' || property === 'aircraft_short' ? (a.flight_plan ? a.flight_plan[property] : '') : a[property];
-            var valueB = property === 'departure' || property === 'arrival' || property === 'aircraft_short' ? (b.flight_plan ? b.flight_plan[property] : '') : b[property];
-
-            if (!valueA) valueA = '';
-            if (!valueB) valueB = '';
-
-            if (valueA < valueB) {
-              return sortDirection[property] === 'asc' ? -1 : 1;
-            }
-            if (valueA > valueB) {
-              return sortDirection[property] === 'asc' ? 1 : -1;
-            }
-            return 0;
-          });
+          flightsData.sort(getSortFunctionBy(lastSortedBy));
 
           $('#flights-container').empty();
           renderTable();
+        };
+      }
+
+      // Добавили новую функцию getSortFunctionBy
+      function getSortFunctionBy(property) {
+        return function(a, b) {
+          var valueA = property === 'departure' || property === 'arrival' || property === 'aircraft_short' ? (a.flight_plan ? a.flight_plan[property] : '') : a[property];
+          var valueB = property === 'departure' || property === 'arrival' || property === 'aircraft_short' ? (b.flight_plan ? b.flight_plan[property] : '') : b[property];
+          
+          if (!valueA) valueA = '';
+          if (!valueB) valueB = '';
+
+          if (valueA < valueB) {
+            return sortDirection[property] === 'asc' ? -1 : 1;
+          }
+          if (valueA > valueB) {
+            return sortDirection[property] === 'asc' ? 1 : -1;
+          }
+          return 0;
         };
       }
 
@@ -287,6 +357,27 @@ setInterval(renderStats, 5000);
         renderStats();
         renderTable();
       });
+    function updateTable() {
+        getFlightsData().then(function() {
+          renderStats();
+          if(lastSortedBy !== null) {
+            flightsData.sort(getSortFunctionBy(lastSortedBy)); // вызываем функцию, которая возвращает функцию сортировки, и применяем ее к массиву данных.
+          }
+          renderTable();
+		  renderControllersTable();
+        });
+      }
+
+      getFlightsData().then(function() {
+        renderStats();
+        renderTable();
+      });
+
+      // First call update function to populate the table
+      updateTable();
+
+      // Then set automatic table updates every 5 seconds
+      setInterval(updateTable, 5000);
     });
   </script>
 </body>
