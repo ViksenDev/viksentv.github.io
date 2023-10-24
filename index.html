@@ -23,17 +23,35 @@
   }
 
   .flights-table, .controllers-table { 
-    width: 90%; 
+    width: auto;
     margin: 20px auto; 
     table-layout: fixed; 
     border-collapse: collapse; 
     box-shadow: 0 2px 15px rgba(0,0,0,0.1);
   }
 
+#tables-container {
+  display: flex;
+  justify-content: space-around; 
+}
+
+
+#controllers-container, #stats-container {
+  margin: 0 50px; 
+}
+
+.site-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
   .flights-table th, .flights-table td, .controllers-table th, .controllers-table td { 
     border: 1px solid #ccc; 
     padding: 15px; 
-    text-align: left; 
+    text-align: center; 
     overflow: hidden; 
     text-overflow: ellipsis; 
     white-space: nowrap; 
@@ -75,6 +93,11 @@
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
+	  width: 100%; 
+  max-width: 700px; /* или любое другое значение, которое вам подходит */
+  height: auto; /* автоматическая высота */
+  overflow-x: auto; /* показывать полосу прокрутки, если содержимое превышает ширину */
+  overflow-y: visible; /* содержимое может выйти за рамки элемента */
   }
 
   .flights-stats p {
@@ -97,11 +120,13 @@
 <body>
   <h1>VATSIM Flights in Russia</h1>
 
-<div id="tables-container">
-    <div id="stats-container"></div>
-    <div id="controllers-container"></div>
-</div>
-<div id="flights-container"></div>  
+<div class="site-content">
+    <div id="tables-container">
+        <div id="stats-container"></div>
+        <div id="controllers-container"></div>
+    </div>
+    <div id="flights-container"></div>  
+  </div>  
   <script>
     $(document).ready(function() {
       var flightsData = [];
@@ -139,7 +164,7 @@ function getFlightsData() {
 // функция для отбора У-диспетчеров
 function filterControllersByPrefix() {
   controllersData = controllersData.filter(function(controller) {
-    return controller.callsign.startsWith('U');
+    return controller.callsign.startsWith('U') && controller.callsign.length === 8;
   });
 }
 
@@ -190,6 +215,7 @@ getFlightsData().then(function() {
 
 function renderStats() {
     var totalPilots = flightsData.length;
+	var totalControllers = controllersData.length;
     var airlinePilots = {};
 
     flightsData.forEach(function (flight) {
@@ -247,11 +273,12 @@ function renderStats() {
     var stats = $('<div>').addClass('flights-stats');
     $('<h2>').text('Flight Statistics').appendTo(stats);
     $('<p>').text('Total pilots: ' + totalPilots).appendTo(stats);
+	$('<p>').text('Total controllers: ' + totalControllers).appendTo(stats);
     $('<p>').text('Top 3 departure airports: ' + top3DepartureAirports.join(', ')).appendTo(stats);
     $('<p>').text('Top 3 arrival airports: ' + top3ArrivalAirports.join(', ')).appendTo(stats);
-    $('<p>').text('Top 3 airlines by pilots: ' + topAirlines.join(', ')).appendTo(stats);
     $('<p>').text('Top 3 aircrafts by pilots: ' + top3Aircrafts.join(', ')).appendTo(stats);
-
+	$('<p>').text('Top 3 airlines by pilots: ' + topAirlines.join(', ')).appendTo(stats);
+	
     $('#stats-container').empty().append(stats);
 }
 
