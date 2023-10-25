@@ -291,7 +291,7 @@ var top3DepartureAirports = Object.entries(allAirports.departures)
 
         // Преобразуйте A20N в A320
         if (aircraft === 'A20N') {
-            aircraft = 'A320';
+            aircraft = 'A20N';
         }
 
         aircraftsCounts[aircraft] = (aircraftsCounts[aircraft] || 0) + 1;
@@ -329,7 +329,7 @@ setInterval(renderStats, 5000);
 
     // Преобразуйте A20N в A320
     if (num === 'A20N') {
-      num = 'A320';
+      num = 'A20N';
     }
 
     counts[num] = counts[num] ? counts[num] + 1 : 1;
