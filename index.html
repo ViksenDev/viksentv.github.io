@@ -348,10 +348,10 @@ function renderTable() {
         $('<td>').text(flight.flight_plan.departure).appendTo(row);
         $('<td>').text(flight.flight_plan.arrival).appendTo(row);
 
-        var aircraft = flight.flight_plan.aircraft_short; // преобразование A20N в A320
-        if (aircraft === 'A20N') {
-          aircraft = 'A320';
-        }
+        var aircraft = flight.flight_plan.aircraft_short;
+        // Check if the aircraft code should be replaced
+        aircraft = aircraftReplace[aircraft] ? aircraftReplace[aircraft] : aircraft;
+
         $('<td>').text(aircraft).appendTo(row);
 
         $('<td>').text(flight.groundspeed).appendTo(row);
@@ -362,6 +362,7 @@ function renderTable() {
     }
     table.appendTo('#flights-container');
 }
+
 
 	  
 	  
