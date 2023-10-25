@@ -154,6 +154,14 @@
 		"UTA": "Utair",
 		"KZR": "Air Astana"
       };
+	        var ICAOReplace = {}; // добавьте эту глобальную переменную в верхней части вашего кода
+
+      function getICAOAirportsData() {
+        return $.getJSON('ICAO_airport.json', function (data) {
+            ICAOReplace = data;
+        });
+      }
+
 var controllersData = [];
 
 function getFlightsData() { 
@@ -267,8 +275,14 @@ getFlightsData().then(function() {
             .map(([airport, count]) => `${airport} (${count} pilots)`);
     }
 
-    var top3DepartureAirports = top3Dict(allAirports.departures);
-    var top3ArrivalAirports = top3Dict(allAirports.arrivals);
+var top3DepartureAirports = Object.entries(allAirports.departures)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3)
+        .map(([airport, count]) => `${ICAOReplace[airport] || airport} (${count} pilots)`);
+    var top3ArrivalAirports = Object.entries(allAirports.arrivals)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3)
+        .map(([airport, count]) => `${ICAOReplace[airport] || airport} (${count} pilots)`);
 
     var aircraftsCounts = {};
 
@@ -350,8 +364,8 @@ function renderTable() {
         }
         $('<td>').text(flight.name.replace(/\b[A-Z]{4}\b/g, '').trim()).appendTo(row);
         $('<td>').text(flight.callsign).appendTo(row);
-        $('<td>').text(flight.flight_plan.departure).appendTo(row);
-        $('<td>').text(flight.flight_plan.arrival).appendTo(row);
+		$('<td>').text(ICAOReplace[flight.flight_plan.departure] || flight.flight_plan.departure).appendTo(row);
+        $('<td>').text(ICAOReplace[flight.flight_plan.arrival] || flight.flight_plan.arrival).appendTo(row);
 
         var aircraft = flight.flight_plan.aircraft_short;
         // Check if the aircraft code should be replaced
@@ -408,7 +422,7 @@ function sortTableBy(property) {
         renderTable();
       });
     function updateTable() {
-        $.when(getFlightsData(), getICAOData()).then(function() {
+        $.when(getFlightsData(), getICAOData(), getICAOAirportsData()).then(function() { // добавьте здесь `getICAOAirportsData()`
           renderStats();
           if(lastSortedBy !== null) {
             flightsData.sort(getSortFunctionBy(lastSortedBy)); // вызываем функцию, которая возвращает функцию сортировки, и применяем ее к массиву данных.
