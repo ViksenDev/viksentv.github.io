@@ -284,9 +284,14 @@ getFlightsData().then(function() {
     });
 
     var top3Aircrafts = Object.entries(aircraftsCounts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 3)
-        .map(([aircraft, count]) => `${aircraft} (${count} pilots)`);
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([aircraft, count]) => {
+        // Заменить код самолета на имя, если имя существует в aircraftReplace 
+        aircraft = aircraftReplace[aircraft] ? aircraftReplace[aircraft] : aircraft; 
+        return `${aircraft} (${count} pilots)`;
+    });
+
 
     var stats = $('<div>').addClass('flights-stats');
     $('<h2>').text('Flight Statistics').appendTo(stats);
