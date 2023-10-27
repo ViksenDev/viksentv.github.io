@@ -392,7 +392,7 @@ function renderTable() {
     var caption = $('<caption>').text('Flights'); // Замените 'Список рейсов' на желаемый заголовок
     table.append(caption);
     var tableHeader = $('<tr>');
-   // $('<th>').text('Pilot').click(sortTableBy('name')).appendTo(tableHeader);
+    
     $('<th>').text('Callsign').click(sortTableBy('callsign')).appendTo(tableHeader);
     $('<th>').text('Departure').click(sortTableBy('departure')).appendTo(tableHeader);
     $('<th>').text('Arrival').click(sortTableBy('arrival')).appendTo(tableHeader);
@@ -411,7 +411,7 @@ function renderTable() {
         if (flight.transponder === "7700") {
           row.addClass('red-highlight');
         }
-        $('<td>').text(flight.name.replace(/\b[A-Z]{4}\b/g, '').trim()).appendTo(row);
+        
         $('<td>').text(flight.callsign).appendTo(row);
 		$('<td>').text(ICAOReplace[flight.flight_plan.departure] || flight.flight_plan.departure).appendTo(row);
         $('<td>').text(ICAOReplace[flight.flight_plan.arrival] || flight.flight_plan.arrival).appendTo(row);
@@ -421,10 +421,9 @@ function renderTable() {
         aircraft = aircraftReplace[aircraft] ? aircraftReplace[aircraft] : aircraft;
 
         $('<td>').text(aircraft).appendTo(row);
-
+	$('<td>').text(flight.altitude).appendTo(row);
         $('<td>').text(flight.groundspeed).appendTo(row);
         $('<td>').text(flight.transponder).appendTo(row);
-        $('<td>').text(flight.altitude).appendTo(row);
         row.appendTo(table);
       }
     }
