@@ -5,9 +5,9 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style> 
-    @font-face {
-        font-family: 'Skyfont';
-        src: url('Skyfont-NonCommercial.otf') format('opentype');
+@font-face {
+        font-family: 'MyCustomFont';  /* Имя выбрано произвольно */
+        src: url('10mal12Lampen.ttf') format('truetype'); /* Путь к файлу шрифта */
         font-weight: normal;
         font-style: normal;
         font-display: swap;
@@ -15,14 +15,13 @@
     
     * {
         box-sizing: border-box;
-        font-family: 'Skyfont', sans-serif;
+        font-family: 'MyCustomFont';  /* Применяем новый шрифт ко всем элементам */
     }
     
 body {
-    font-family: 'led_board_normal', sans-serif;
     color: #333333;
     background-image: url("P-9b.jpg");
-    background-size: cover; /* Это гарантирует, что изображение будет адекватно подстраиваться под размер страницы */
+    background-size: cover;
 }
     h1 {
         color: #000000;
