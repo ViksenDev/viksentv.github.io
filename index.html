@@ -35,7 +35,7 @@ body {
     width: 100%;
     margin: 20px auto;
     border-collapse: collapse;
-    color: #333333;
+    color: #000000;
     background-color: #ffffff; /* Белый цвет фона таблицы */
     overflow-x: auto;
     font-size: 1.2rem; /* Увеличенный размер шрифта */
@@ -45,7 +45,7 @@ body {
     width: 100%;
     margin: 20px auto;
     border-collapse: collapse;
-    color: #333333;
+    color: #000000;
     background-color: #ffffff; /* Белый цвет фона таблицы */
     overflow-x: auto;
     font-size: 1.5rem; /* Увеличенный размер шрифта */
@@ -358,10 +358,10 @@ var top3DepartureAirports = Object.entries(allAirports.departures)
     $('<h2>').text('Flight Statistics').appendTo(stats);
     $('<p>').text('Total pilots: ' + totalPilots).appendTo(stats);
 	$('<p>').text('Total controllers: ' + totalControllers).appendTo(stats);
-    $('<p>').text('Top 3 departure airports: ' + top3DepartureAirports.join(', ')).appendTo(stats);
-    $('<p>').text('Top 3 arrival airports: ' + top3ArrivalAirports.join(', ')).appendTo(stats);
-    $('<p>').text('Top 3 aircrafts by pilots: ' + top3Aircrafts.join(', ')).appendTo(stats);
-        $('<p>').text('Top 3 airlines by pilots: ' + topAirlines.join(', ')).appendTo(stats);
+    $('<p>').text('Top 3 departure: ' + top3DepartureAirports.join(', ')).appendTo(stats);
+    $('<p>').text('Top 3 arrival: ' + top3ArrivalAirports.join(', ')).appendTo(stats);
+    $('<p>').text('Top 3 aircrafts: ' + top3Aircrafts.join(', ')).appendTo(stats);
+        $('<p>').text('Top 3 airlines: ' + topAirlines.join(', ')).appendTo(stats);
         $('#stats-container').empty().append(stats);
       }
 
