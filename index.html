@@ -36,7 +36,7 @@ body {
 .flights-table td,
 .flights-stats p,
 .controllers-table td {
-    animation: flash 1s;
+    animation: flash 2s;
 }
 
 	
@@ -381,7 +381,7 @@ var top3DepartureAirports = Object.entries(allAirports.departures)
   $('#stats-container').empty().append(stats);
 }
 
-setInterval(renderStats, 5000);
+setInterval(renderStats, 15000);
 
 
 	
@@ -500,7 +500,7 @@ function sortTableBy(property) {
       updateTable();
 
       // Then set automatic table updates every 5 seconds
-      setInterval(updateTable, 5000);
+      setInterval(updateTable, 15000);
     });
   </script>
 </body>
