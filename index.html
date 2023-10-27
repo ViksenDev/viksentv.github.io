@@ -392,14 +392,15 @@ function renderTable() {
     var caption = $('<caption>').text('Flights'); // Замените 'Список рейсов' на желаемый заголовок
     table.append(caption);
     var tableHeader = $('<tr>');
-    $('<th>').text('Pilot').click(sortTableBy('name')).appendTo(tableHeader);
+   // $('<th>').text('Pilot').click(sortTableBy('name')).appendTo(tableHeader);
     $('<th>').text('Callsign').click(sortTableBy('callsign')).appendTo(tableHeader);
     $('<th>').text('Departure').click(sortTableBy('departure')).appendTo(tableHeader);
     $('<th>').text('Arrival').click(sortTableBy('arrival')).appendTo(tableHeader);
     $('<th>').text('Aircraft').click(sortTableBy('aircraft_short')).appendTo(tableHeader);
+    $('<th>').text('Altitude').click(sortTableBy('altitude')).appendTo(tableHeader);	
     $('<th>').text('Groundspeed').click(sortTableBy('groundspeed')).appendTo(tableHeader);
     $('<th>').text('Transponder').click(sortTableBy('transponder')).appendTo(tableHeader);
-    $('<th>').text('Altitude').click(sortTableBy('altitude')).appendTo(tableHeader);
+    
     tableHeader.appendTo(table);
 
     for (var i = 0; i < flightsData.length; i++) {
