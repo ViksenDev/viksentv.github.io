@@ -26,18 +26,28 @@ body {
         font-size: 4rem; /* Увеличенный размер шрифта*/
     }
 
-    @keyframes flip {
-      from {
-        transform: rotateX(0deg);
-      }
-      to {
-        transform: rotateX(360deg);
-      }
-    }
+@keyframes flip {
+  0% {
+    opacity: 0;
+    transform: perspective(400px) rotateX(90deg);
+  }
+  39% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: perspective(400px) rotateX(-90deg);
+  }
+}
 
-    .flip {
-      animation: flip 0.5s linear;
-    }
+.flip-span {
+  display: inline-block;
+  animation: flip 0.5s linear;
+  animation-fill-mode: both;
+}
 	
 .flights-table {
     width: 100%;
@@ -262,6 +272,14 @@ function filterControllersByPrefix() {
   });
 }
 
+	    function animatedRenderText(element, text) {
+  var newChild = "";
+  for (var i = 0; i < text.length; i++) {
+    newChild += "<span class='flip-span'>" + text[i] + "</span>";
+  }
+  element.html(newChild);
+}
+	    
 // Добавить данные в другую сторону таблицы
 function renderControllersTable() {
   var table = $('<table>').addClass('controllers-table');
@@ -277,9 +295,9 @@ function renderControllersTable() {
   for (var i = 0; i < controllersData.length; i++) {
     var controller = controllersData[i];
     var row = $('<tr>');
-    $('<td>').text(controller.name).appendTo(row);
-    $('<td>').text(controller.callsign).appendTo(row);
-    $('<td>').text(controller.frequency).appendTo(row);
+    $('<td>').animatedRenderText(controller.name).appendTo(row);
+    $('<td>').animatedRenderText(controller.callsign).appendTo(row);
+    $('<td>').animatedRenderText(controller.frequency).appendTo(row);
     row.appendTo(table);
   }
   $('#controllers-container').empty().append(table);
@@ -435,16 +453,16 @@ function renderTable() {
           row.addClass('red-highlight');
         }
         
-        $('<td>').text(flight.callsign).appendTo(row);
+        $('<td>').animatedRenderText(flight.callsign).appendTo(row);
 		$('<td>').text(ICAOReplace[flight.flight_plan.departure] || flight.flight_plan.departure).appendTo(row);
-        $('<td>').text(ICAOReplace[flight.flight_plan.arrival] || flight.flight_plan.arrival).appendTo(row);
+        $('<td>').animatedRenderText(ICAOReplace[flight.flight_plan.arrival] || flight.flight_plan.arrival).appendTo(row);
 
         var aircraft = flight.flight_plan.aircraft_short;
         // Check if the aircraft code should be replaced
         aircraft = aircraftReplace[aircraft] ? aircraftReplace[aircraft] : aircraft;
 
-        $('<td>').text(aircraft).appendTo(row);
-        $('<td>').text(flight.transponder).appendTo(row);
+        $('<td>').animatedRenderText(aircraft).appendTo(row);
+        $('<td>').animatedRenderText(flight.transponder).appendTo(row);
         row.appendTo(table);
       }
     }
