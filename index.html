@@ -3,38 +3,40 @@
 <head>
   <title>VATSIM Flights in Russia</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style> 
+<style>
   body { 
-    background-color: #f9f9f9; 
-    color: #333;
-    font-family: 'Roboto', sans-serif; 
+    background-color: #000; 
+    color: #fff;
+    font-family: 'Courier New', monospace; 
     margin: 0; 
     padding: 0; 
     line-height: 1.5;
   } 
 
   h1 { 
-    background-color: #333; 
+    background-color: #000; 
     color: #fff; 
     padding: 20px 0; 
     text-align: center; 
     margin: 0; 
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .flights-table, .controllers-table { 
-    width: auto;
+    width: 100%;
     margin: 20px auto; 
     table-layout: fixed; 
     border-collapse: collapse; 
-    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    color: #0f0;
+    background-color: #000;
   }
 
-#tables-container {
-  display: flex;
-  justify-content: space-around; 
-}
-
+  #tables-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
 #controllers-container, #stats-container {
   margin: 0 50px; 
@@ -45,21 +47,23 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   min-height: 100vh;
 }
 
   .flights-table th, .flights-table td, .controllers-table th, .controllers-table td { 
-    border: 1px solid #ccc; 
+    border: 1px solid #999; 
     padding: 15px; 
     text-align: center; 
     overflow: hidden; 
     text-overflow: ellipsis; 
     white-space: nowrap; 
     cursor: pointer;
+    font-size: 18px; 
   } 
 
   .flights-table caption, .controllers-table caption { 
-    border: 1px solid #ccc; 
+    border: 1px solid #999; 
     padding: 15px; 
     text-align: center; 
     overflow: hidden; 
@@ -67,55 +71,63 @@
     white-space: nowrap; 
 	font-weight: bold;
     cursor: pointer;
+    font-size: 2rem;
   } 
 
-  .flights-table th, .controllers-table th { 
-    background-color: #555; 
-    color: #fff; 
-  } 
-  
-  .flights-table caption, .controllers-table caption { 
-    background-color: #555; 
-    color: #fff; 
+  .flights-table th, .controllers-table th, .flights-table caption, .controllers-table caption { 
+    background-color: #000; 
+    color: #0f0; 
   } 
 
   .flights-table tr:nth-child(even), .controllers-table tr:nth-child(even) { 
-    background-color: #f2f2f2;
+    background-color: #111;
   }
 
   .flights-table tr:hover, .controllers-table tr:hover {
-    background-color: #ddd;
+    background-color: #222;
   }
 
   .flights-stats {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
+    color: #0f0;
+    background-color: #000;
+    border: 1px solid #999;
     border-radius: 5px;
     padding: 10px;
-    margin: 10px;
-	  width: 100%; 
-  max-width: 700px; /* или любое другое значение, которое вам подходит */
-  height: auto; /* автоматическая высота */
-  overflow-x: auto; /* показывать полосу прокрутки, если содержимое превышает ширину */
-  overflow-y: visible; /* содержимое может выйти за рамки элемента */
+    margin: 20px;
+    width: 100%; 
+    max-width: 700px; 
+    overflow-x: auto; 
+    overflow-y: visible; 
   }
 
   .flights-stats p {
     margin: 5px 0;
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .flights-stats h2 {
-    font-size: 20px;
+    font-size: 24px;
     margin: 0;
   }
 
   .alert {
-    color: red;
-    text-align: center;
+    color: #f00;
     font-size: 1.2rem;
   }
+
+  /* Добавления для эффекта маятника */
+  @keyframes blink {  
+    0% { color: #0f0; }
+    50% { color: transparent; }
+    100% { color: #0f0; }
+  }
+
+  .blink {
+    animation: blink 1s linear infinite;
+  }
+
 </style>
+
 </head>
 <body>
   <h1>VATSIM Flights in Russia</h1>
