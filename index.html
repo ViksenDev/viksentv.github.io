@@ -32,8 +32,6 @@ body {
         font-size: 5rem; /* Увеличенный размер шрифта*/
     }
 
-
-	
 .flights-table {
     width: 100%;
     margin: 20px auto;
@@ -66,24 +64,9 @@ body {
     }
 
 
-#info-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-content: center;
-  align-items: start;
-}
-
-#stats-container {
-  flex: 1;
-  margin: 0 50px;
-}
-
-#controllers-container {
-  flex: 1;
-  margin: 0 50px;
-}
-
+    #controllers-container, #stats-container {
+        margin: 0 50px;
+    }
 
     .site-content {
         display: flex;
@@ -184,10 +167,10 @@ body {
   <h1>VATSIM Flights in Russia</h1>
 
 <div class="site-content">
-<div id="info-container">
-    <div id="stats-container"></div>
-    <div id="controllers-container"></div>
-</div>
+    <div id="tables-container">
+        <div id="stats-container"></div>
+        <div id="controllers-container"></div>
+    </div>
     <div id="flights-container"></div>  
   </div>  
   <script>
