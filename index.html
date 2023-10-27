@@ -32,11 +32,7 @@ body {
         font-size: 5rem; /* Увеличенный размер шрифта*/
     }
 
-	#info-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
+
 	
 .flights-table {
     width: 100%;
@@ -70,9 +66,24 @@ body {
     }
 
 
-    #controllers-container, #stats-container {
-        margin: 0 50px;
-    }
+#info-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  align-items: start;
+}
+
+#stats-container {
+  flex: 1;
+  margin: 0 50px;
+}
+
+#controllers-container {
+  flex: 1;
+  margin: 0 50px;
+}
+
 
     .site-content {
         display: flex;
