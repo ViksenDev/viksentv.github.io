@@ -19,11 +19,11 @@
     
     body {
         font-family: 'led_board_normal', sans-serif;
-        color: #ffffff; /* Белый цвет текста */
-        background-color: #333333; /* Цвет темного фона */
+        color: #333333; /* Темный цвет текста */
+        background-color: #f2f2f2; /* Светлый цвет фона */
     }
     h1 {
-        color: #ffffff;
+        color: #333333;
         padding: 20px 0;
         text-align: center;
         margin: 0;
@@ -34,8 +34,8 @@
     width: 100%;
     margin: 20px auto;
     border-collapse: collapse;
-    color: #ffffff;
-    background-color: #444444; /* Темный серый цвет фона таблицы */
+    color: #333333;
+    background-color: #ffffff; /* Белый цвет фона таблицы */
     overflow-x: auto;
     font-size: 1.2rem; /* Увеличенный размер шрифта */
 }
@@ -64,7 +64,7 @@
     }
 
 .flights-table th, .flights-table td, .controllers-table th, .controllers-table td {
-    border: 1px solid #ffdd00;
+    border: 1px solid #dddddd; /* Светлый цвет границ таблицы */
     padding: 10px; /* Добавим отступы внутри ячеек */
     text-align: center;
     overflow: hidden;
@@ -75,7 +75,7 @@
 }
 
 .flights-table caption, .controllers-table caption {
-    border: 1px solid #ffdd00;
+    border: 1px solid #dddddd; /* Светлый цвет границы заголовка таблицы */
     padding: 10px; /* Добавим отступы внутри блоков */
     text-align: center;
     overflow: hidden;
@@ -87,22 +87,22 @@
 }
 
     .flights-table th, .controllers-table th, .flights-table caption, .controllers-table caption {
-        background-color: #212121;
-        color: #ffffff;
+        background-color: #f2f2f2; /* Светлый цвет фона заголовка таблицы */
+        color: #333333; /* Темный цвет текста заголовка таблицы */
     }
 
     .flights-table tr:nth-child(even), .controllers-table tr:nth-child(even) {
-        background-color: #313131;
+        background-color: #f9f9f9; /* Светло-серый цвет фона четных строк таблицы */
     }
 
     .flights-table tr:hover, .controllers-table tr:hover {
-        background-color: #414141;
+        background-color: #eaeaea; /* Градиентный цвет фона при наведении на строку таблицы */
     }
     
     .flights-stats {
-        color: #ffffff;
-        background-color: #212121;
-        border: 1px solid #ffdd00;
+        color: #333333;
+        background-color: #f2f2f2; /* Светлый цвет фона блока со статистикой */
+        border: 1px solid #dddddd; /* Светлый цвет границ блока со статистикой */
         border-radius: 5px;
         padding: 10px;
         margin: 20px;
@@ -137,13 +137,13 @@
 
     .flights-table, .controllers-table {
         font-family: 'led_board_normal', sans-serif;
-        color: #ffffff;
+        color: #333333;
     }
 
     /* стили для главной метки на странице */
     .red-highlight {
-      background-color: #ff4444;
-      color: #ffffff;
+      background-color: #ff4444; /* Красный цвет фона для условной выделенной строки */
+      color: #ffffff; /* Белый цвет текста для условной выделенной строки */
     }
 
 </style>
