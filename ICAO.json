@@ -86,9 +86,9 @@
 "B772": "Boeing 777-200",
 "B773": "Boeing 777-300",
 "B77W": "Boeing 777-300ER",
-"B788": "Boeing 787-8 Dreamliner",
-"B78X": "Boeing 787-10 Dreamliner",
-"B789": "Boeing 787-9 Dreamliner",
+"B788": "Boeing 787-8",
+"B78X": "Boeing 787-10",
+"B789": "Boeing 787-9",
 "BCS1": "Bombardier CS100",
 "BCS3": "Bombardier CS300",
 "BE20": "Beechcraft King Air 250",
@@ -226,9 +226,11 @@
 "ULAC": "Ultralight aircraft",
 "Y12": "Harbin Yunshuji Y-12 II",
 "Y130": "Yakovlev Yak-130",
-"YK18": "Yakovlev Yak-18T (series 36)",
+"YK18": "Yakovlev Yak-18T",
 "YK40": "Yakovlev Yak-40",
 "YK42": "Yakovlev Yak-42D",
 "YK52": "Yakovlev Yak-52",
-"YK54": "Yakovlev Yak-54"
+"YK54": "Yakovlev Yak-54",
+"B38M": "Boeing 737 MAX 8",
+"A350": "Airbus A350"
 }
