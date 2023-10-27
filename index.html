@@ -210,22 +210,20 @@ body {
 
 var controllersData = [];
 
-    function getFlightsData() { 
-      return $.get('https://data.vatsim.net/v3/vatsim-data.json').then(function(data) {
-        flightsData = data.pilots;
-        controllersData = data.controllers; // добавлено
-        if (flightsData.length > 0 || controllersData.length > 0) { // изменено
-          filterFlightsByAirport();
-          filterControllersByPrefix();
-          addFlipClass('#flights-container'); // Добавьте эту строку для применения анимации
-	  addFlipClass('#controllers-container'); // Добавьте эту строку для применения анимации
-	  addFlipClass('#stats-container'); // Добавьте эту строку для применения анимации
-        } else {
-          $('<p>').text('No flights or controllers found.').addClass('alert').appendTo('#flights-container');
-        }
-        return [flightsData, controllersData]; // изменено
-      });
+function getFlightsData() { 
+  return $.get('https://data.vatsim.net/v3/vatsim-data.json').then(function(data) {
+    flightsData = data.pilots;
+    controllersData = data.controllers; // добавлено
+    if (flightsData.length > 0 || controllersData.length > 0) { // изменено
+      filterFlightsByAirport();
+      filterControllersByPrefix();
+    } else {
+      $('<p>').text('No flights or controllers found.').addClass('alert').appendTo('#flights-container');
     }
+    return [flightsData, controllersData]; // изменено
+  });
+}
+
 
 
       function getICAOData() {
