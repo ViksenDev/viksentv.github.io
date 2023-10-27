@@ -30,15 +30,15 @@
         font-size: 3rem; /* Увеличенный размер шрифта*/
     }
 
-    .flights-table, .controllers-table {
-        width: 100%;
-        margin: 20px auto;
-        border-collapse: collapse;
-        color: black;
-        background-color: #333333;
-        overflow-x: auto;
-        font-size: 1.2rem; /* Увеличенный размер шрифта */
-    }
+.flights-table, .controllers-table {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    color: black;
+    background-color: #000000; /* Черный цвет фона таблицы */
+    overflow-x: auto;
+    font-size: 1.2rem; /* Увеличенный размер шрифта */
+}
 
     #tables-container {
         display: flex;
@@ -63,28 +63,28 @@
         min-height: 100vh;
     }
 
-  .flights-table th, .flights-table td, .controllers-table th, .controllers-table td {
-      border: 1px solid #ffdd00;
-      padding: 10px;
-      text-align: center;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      cursor: pointer;
-      font-size: 2rem; /* Увеличим размер шрифта */
-  }
+.flights-table th, .flights-table td, .controllers-table th, .controllers-table td {
+    border: 1px solid #ffdd00;
+    padding: 0; /* Удаление отступа */
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 1.5rem; /* Увеличение размера шрифта */
+}
 
-  .flights-table caption, .controllers-table caption {
-      border: 1px solid #ffdd00;
-      padding: 10px;
-      text-align: center;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 2.4rem; /* Увеличим размер шрифта */
-  }
+.flights-table caption, .controllers-table caption {
+    border: 1px solid #ffdd00;
+    padding: 0; /* Удаление отступа */
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.7rem; /* Увеличение размера шрифта */
+}
 
     .flights-table th, .controllers-table th, .flights-table caption, .controllers-table caption {
         background-color: #212121;
