@@ -35,6 +35,20 @@ overflow-x: auto;
 font-size: 1rem;
 }
 
+	  .cool-text {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.1em;
+    color: white;
+    text-shadow:
+      3px 0 0 red, -3px 0 0 red,
+      0 3px 0 red, 0 -3px 0 red,
+      2px 2px red, -2px -2px red, 2px -2px red, -2px 2px red;
+  }
+
 #tables-container {
 display: flex;
 flex-direction: column;
@@ -410,20 +424,20 @@ function renderTable() {
         if (flight.transponder === "7700") {
           row.addClass('red-highlight');
         }
-        $('<td>').text(flight.name.replace(/\b[A-Z]{4}\b/g, '').trim()).appendTo(row);
-        $('<td>').text(flight.callsign).appendTo(row);
+        $('<td class="cool-text">').text(flight.name.replace(/\b[A-Z]{4}\b/g, '').trim()).appendTo(row);
+        $('<td class="cool-text">').text(flight.callsign).appendTo(row);
 		$('<td>').text(ICAOReplace[flight.flight_plan.departure] || flight.flight_plan.departure).appendTo(row);
-        $('<td>').text(ICAOReplace[flight.flight_plan.arrival] || flight.flight_plan.arrival).appendTo(row);
+        $('<td class="cool-text">').text(ICAOReplace[flight.flight_plan.arrival] || flight.flight_plan.arrival).appendTo(row);
 
         var aircraft = flight.flight_plan.aircraft_short;
         // Check if the aircraft code should be replaced
         aircraft = aircraftReplace[aircraft] ? aircraftReplace[aircraft] : aircraft;
 
-        $('<td>').text(aircraft).appendTo(row);
+        $('<td class="cool-text">').text(aircraft).appendTo(row);
 
-        $('<td>').text(flight.groundspeed).appendTo(row);
-        $('<td>').text(flight.transponder).appendTo(row);
-        $('<td>').text(flight.altitude).appendTo(row);
+        $('<td class="cool-text">').text(flight.groundspeed).appendTo(row);
+        $('<td class="cool-text">').text(flight.transponder).appendTo(row);
+        $('<td class="cool-text">').text(flight.altitude).appendTo(row);
         row.appendTo(table);
       }
     }
