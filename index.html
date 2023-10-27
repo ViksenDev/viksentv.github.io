@@ -6,22 +6,17 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style> 
 @font-face {
-        font-family: 'MyCustomFont';  /* Имя выбрано произвольно */
-        src: url('10mal12Lampen.ttf') format('truetype'); /* Путь к файлу шрифта */
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-    }
-    
-    * {
-        box-sizing: border-box;
-        font-family: 'MyCustomFont';  /* Применяем новый шрифт ко всем элементам */
-        color: #000000; /* Измененный цвет шрифта */
-    }
-    
+  font-family: 'led_stadion';  /* Имя выбрано произвольно */
+  src: url('led_stadion_7.ttf') format('truetype'); /* Путь к файлу шрифта */
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
-    background-image: url("P-9b.jpg");
-    background-size: cover;
+    background-color: black; /* Делаем фон страницы черным */
+    font-family: 'led_stadion'; /* Применяем новый шрифт ко всем элементам */
+    color: #ffffff; /* Измененный цвет шрифта */
 }
     h1 {
         color: transparent;
@@ -140,10 +135,10 @@ body {
         font-size: 1.2rem;
     }
 
-    .flights-table, .controllers-table {
-        font-family: 'led_board_normal', sans-serif;
-        color: transparent;
-    }
+.flights-table, .controllers-table {
+    font-family: 'led_stadion', sans-serif;
+    color: #ffffff;   /* Цвет текста таблицы - белый */
+}
 
     /* стили для главной метки на странице */
     .red-highlight {
