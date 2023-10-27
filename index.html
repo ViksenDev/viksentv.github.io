@@ -26,28 +26,18 @@ body {
         font-size: 4rem; /* Увеличенный размер шрифта*/
     }
 
-@keyframes flip {
-  0% {
-    opacity: 0;
-    transform: perspective(400px) rotateX(90deg);
-  }
-  39% {
-    opacity: 1;
-  }
-  55% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: perspective(400px) rotateX(-90deg);
-  }
-}
+    @keyframes flip {
+      from {
+        transform: rotateX(0deg);
+      }
+      to {
+        transform: rotateX(360deg);
+      }
+    }
 
-.flip-span {
-  display: inline-block;
-  animation: flip 0.5s linear;
-  animation-fill-mode: both;
-}
+    .flip {
+      animation: flip 0.5s linear;
+    }
 	
 .flights-table {
     width: 100%;
@@ -197,9 +187,7 @@ body {
   </div>  
   <script>
     $(document).ready(function() {
-     var ICAOReplace = {}; // добавьте эту глобальную переменную в верхней части вашего кода
-var aircraftReplace = {}; // инициализация aircraftReplace
-	    var flightsData = [];
+      var flightsData = [];
 	  var sortDirectionControllers = {
   name: 'asc',
   callsign: 'asc',
@@ -274,36 +262,28 @@ function filterControllersByPrefix() {
   });
 }
 
-  function animatedRenderText(element, text) {
-    var newChild = "";
-    for (var i = 0; i < text.length; i++) {
-      newChild += "<span class='flip-span'>" + text[i] + "</span>";
-    }
-    element.html(newChild);
-  }
-	    
 // Добавить данные в другую сторону таблицы
-  function renderControllersTable() {
-    var table = $('<table>').addClass('controllers-table');
-    var caption = $('<caption>').text('Controllers'); 
-    table.append(caption);
-    var tableHeader = $('<tr>');
-    $('<th>').text('Name').appendTo(tableHeader);
-    $('<th>').text('Callsign').appendTo(tableHeader);
-    $('<th>').text('Frequency').appendTo(tableHeader);
-    tableHeader.appendTo(table);
+function renderControllersTable() {
+  var table = $('<table>').addClass('controllers-table');
+  var caption = $('<caption>').text('Controllers'); // Замените 'Список рейсов' на желаемый заголовок
+  table.append(caption);
+  var tableHeader = $('<tr>');
+  $('<th>').text('Name').appendTo(tableHeader);
+  $('<th>').text('Callsign').appendTo(tableHeader);
+  $('<th>').text('Frequency').appendTo(tableHeader);
   
-    for (var i = 0; i < controllersData.length; i++) {
-      var controller = controllersData[i];
-      var row = $('<tr>');
-      animatedRenderText($('<td>'), controller.name).appendTo(row);
-      animatedRenderText($('<td>'), controller.callsign).appendTo(row);
-      animatedRenderText($('<td>'), controller.frequency).appendTo(row);
-      row.appendTo(table);
-    }
+  tableHeader.appendTo(table);
 
-    $('#controllers-container').html(table);
+  for (var i = 0; i < controllersData.length; i++) {
+    var controller = controllersData[i];
+    var row = $('<tr>');
+    $('<td>').text(controller.name).appendTo(row);
+    $('<td>').text(controller.callsign).appendTo(row);
+    $('<td>').text(controller.frequency).appendTo(row);
+    row.appendTo(table);
   }
+  $('#controllers-container').empty().append(table);
+}
 // In your ready function adjust this part
 getFlightsData().then(function() {
   renderStats();
@@ -431,9 +411,9 @@ setInterval(renderStats, 5000);
 }
 
 
-  function renderTable() {
-    $('#flights-container').empty();
-    var table = $('<table>').addClass('flights-table');
+function renderTable() {
+  $('#flights-container').empty(); // очистить контейнер перед рисованием новой таблицы
+  var table = $('<table>').addClass('flights-table');
     var caption = $('<caption>').text('Flights'); // Замените 'Список рейсов' на желаемый заголовок
     table.append(caption);
     var tableHeader = $('<tr>');
@@ -455,17 +435,17 @@ setInterval(renderStats, 5000);
           row.addClass('red-highlight');
         }
         
-   
-    animatedRenderText($('<td>'), flight.callsign).appendTo(row);
-    $('<td>').text(ICAOReplace[flight.flight_plan.departure] || flight.flight_plan.departure).appendTo(row);
-    animatedRenderText($('<td>'), ICAOReplace[flight.flight_plan.arrival] || flight.flight_plan.arrival).appendTo(row);
+        $('<td>').text(flight.callsign).appendTo(row);
+		$('<td>').text(ICAOReplace[flight.flight_plan.departure] || flight.flight_plan.departure).appendTo(row);
+        $('<td>').text(ICAOReplace[flight.flight_plan.arrival] || flight.flight_plan.arrival).appendTo(row);
 
-    var aircraft = flight.flight_plan.aircraft_short;
-    aircraft = aircraftReplace[aircraft] ? aircraftReplace[aircraft] : aircraft;
+        var aircraft = flight.flight_plan.aircraft_short;
+        // Check if the aircraft code should be replaced
+        aircraft = aircraftReplace[aircraft] ? aircraftReplace[aircraft] : aircraft;
 
-    animatedRenderText($('<td>'), aircraft).appendTo(row);
-    animatedRenderText($('<td>'), flight.transponder).appendTo(row);
-    row.appendTo(table);
+        $('<td>').text(aircraft).appendTo(row);
+        $('<td>').text(flight.transponder).appendTo(row);
+        row.appendTo(table);
       }
     }
     table.appendTo('#flights-container');
