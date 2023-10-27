@@ -197,7 +197,9 @@ body {
   </div>  
   <script>
     $(document).ready(function() {
-      var flightsData = [];
+     var ICAOReplace = {}; // добавьте эту глобальную переменную в верхней части вашего кода
+var aircraftReplace = {}; // инициализация aircraftReplace
+	    var flightsData = [];
 	  var sortDirectionControllers = {
   name: 'asc',
   callsign: 'asc',
