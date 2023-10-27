@@ -43,13 +43,15 @@ body {
 
     #tables-container {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
-        align-items: center;
         overflow: hidden;
         width: 90%;
         margin: 0 auto;
+        align-content: center;
+        align-items: flex-start;
     }
+
 
     #controllers-container, #stats-container {
         margin: 0 50px;
@@ -227,6 +229,8 @@ function filterControllersByPrefix() {
 // Добавить данные в другую сторону таблицы
 function renderControllersTable() {
   var table = $('<table>').addClass('controllers-table');
+  var caption = $('<caption>').text('Controllers'); // Замените 'Список рейсов' на желаемый заголовок
+  table.append(caption);
   var tableHeader = $('<tr>');
   $('<th>').text('Name').appendTo(tableHeader);
   $('<th>').text('Callsign').appendTo(tableHeader);
