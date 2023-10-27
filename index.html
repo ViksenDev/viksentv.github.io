@@ -30,6 +30,7 @@ body {
     width: 100%;
     margin: 20px auto;
     border-collapse: collapse;
+    border: 1px solid orange; /* Черный цвет границ блока со статистикой */
     color: transparent;
     background-color: transparent; /* замените белый цвет фона на прозрачный */
     overflow-x: auto;
@@ -40,6 +41,7 @@ body {
     width: 100%;
     margin: 20px auto;
     border-collapse: collapse;
+    border: 1px solid orange; /* Черный цвет границ блока со статистикой */
     color: transparent;
     background-color: transparent; /* замените белый цвет фона на прозрачный */
     overflow-x: auto;
@@ -71,8 +73,19 @@ body {
         min-height: 100vh;
     }
 
-.flights-table th, .flights-table td, .controllers-table th, .controllers-table td {
-    border: 1px solid orange; /* Черный цвет границ таблицы */
+.flights-table th, .controllers-table th {
+    border: 1px solid transparent; /* Черный цвет границ таблицы */
+    padding: 2px; /* Добавим отступы внутри ячеек */
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 1.7rem; /* Уменьшим размер шрифта для улучшения читаемости */
+}
+
+.flights-table td, .controllers-table td {
+    border: 1px solid transparent; /* Черный цвет границ таблицы */
     padding: 2px; /* Добавим отступы внутри ячеек */
     text-align: center;
     overflow: hidden;
