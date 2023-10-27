@@ -26,18 +26,6 @@ body {
         font-size: 4rem; /* Увеличенный размер шрифта*/
     }
 
-    @keyframes flip {
-      from {
-        transform: rotateX(0deg);
-      }
-      to {
-        transform: rotateX(360deg);
-      }
-    }
-
-    .flip {
-      animation: flip 0.5s linear;
-    }
 	
 .flights-table {
     width: 100%;
@@ -239,15 +227,6 @@ var controllersData = [];
       });
     }
 
-    // Без изменений... 
-
-    // Добавьте эту функцию
-    function addFlipClass(id) {
-      $(id).addClass('flip');
-      setTimeout(function() {
-        $(id).removeClass('flip');
-      }, 500);
-    }
 
       function getICAOData() {
         return $.getJSON('ICAO.json', function (data) {
