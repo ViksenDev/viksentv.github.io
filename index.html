@@ -357,11 +357,11 @@ var top3DepartureAirports = Object.entries(allAirports.departures)
   var stats = $('<div>').addClass('flights-stats');
   $('<h2>').text('Flight Statistics').appendTo(stats);
   $('<p>').html('Total pilots: ' + totalPilots + '<br>').appendTo(stats);
-  $('<p>').html('Total controllers: ' + totalControllers + '<br>').appendTo(stats);
-  $('<p>').html('Top 3 departure: ' + top3DepartureAirports.join(',<br>') + '<br>').appendTo(stats);
-  $('<p>').html('Top 3 arrival: ' + top3ArrivalAirports.join(',<br>') + '<br>').appendTo(stats);
-  $('<p>').html('Top 3 aircrafts: ' + top3Aircrafts.join(',<br>') + '<br>').appendTo(stats);
-  $('<p>').html('Top 3 airlines: ' + topAirlines.join(',<br>') + '<br>').appendTo(stats);
+  $('<p>').html('Total controllers: ' + totalControllers + '<br>''<br>').appendTo(stats);
+  $('<p>').html('Top 3 departure: ''<br>' + top3DepartureAirports.join(',<br>') + '<br>').appendTo(stats);
+  $('<p>').html('Top 3 arrival: ''<br>' + top3ArrivalAirports.join(',<br>') + '<br>').appendTo(stats);
+  $('<p>').html('Top 3 aircrafts: ''<br>' + top3Aircrafts.join(',<br>') + '<br>').appendTo(stats);
+  $('<p>').html('Top 3 airlines: ''<br>' + topAirlines.join(',<br>') + '<br>').appendTo(stats);
   $('#stats-container').empty().append(stats);
 }
 
