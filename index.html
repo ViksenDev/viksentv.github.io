@@ -8,27 +8,30 @@
     box-sizing: border-box;
   }
 
-        @font-face {
-            font-family: '10mal12Lampen';
-            src: url('10mal12Lampen.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
+  @font-face {
+    font-family: '10mal12Lampen';
+    src: url('10mal12Lampen.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
         
-        body {
-            font-family: '10mal12Lampen', sans-serif;
-            color: orange; /* Оранжевый цвет текста */
-            background-color: #333333; /* Цвет темного фона */
-        }
-
+  body {
+    font-family: '10mal12Lampen', sans-serif;
+    color: orange;
+    background-color: #333333;
+    text-shadow: 0px 0px 0px orange;
+    animation: sweetShadow 1s infinite alternate;
+  }
 
   h1 { 
-    color: #ffdd00;
+    color: #ffdd00; 
     padding: 20px 0; 
     text-align: center; 
     margin: 0; 
     font-size: 2.5rem;
+    text-shadow: 0px 0px 0px #ffdd00;
+    animation: sweetShadowYellow 1s infinite alternate;
   }
 
   .flights-table, .controllers-table { 
@@ -64,41 +67,43 @@
   min-height: 100vh;
 }
 
-  .flights-table th, .flights-table td, .controllers-table th, .controllers-table td { 
-    border: 1px solid #ffdd00;
-    padding: 10px; 
-    text-align: center; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    white-space: nowrap; 
-    cursor: pointer;
-    font-size: 1rem;
-  } 
+.flights-table th, .flights-table td, .controllers-table th, .controllers-table td { 
+  border: 1px solid #ffdd00;
+  padding: 10px; 
+  text-align: center; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  white-space: nowrap; 
+  cursor: pointer;
+  font-size: 1rem;
+} 
 
-  .flights-table caption, .controllers-table caption { 
-    border: 1px solid #ffdd00;
-    padding: 10px; 
-    text-align: center; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    white-space: nowrap; 
-	font-weight: bold;
-    cursor: pointer;
-    font-size: 1.2rem;
-  } 
+.flights-table caption, .controllers-table caption { 
+  border: 1px solid #ffdd00;
+  padding: 10px; 
+  text-align: center; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  white-space: nowrap; 
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.2rem;
+} 
 
-  .flights-table th, .controllers-table th, .flights-table caption, .controllers-table caption { 
-    background-color: #212121; 
-    color: #ffdd00; 
-  } 
+.flights-table th, .controllers-table th, .flights-table caption, .controllers-table caption { 
+  background-color: #212121; 
+  color: #ffdd00; 
+  text-shadow: 0px 0px 0px #ffdd00;
+  animation: sweetShadowYellow 1s infinite alternate;
+} 
 
-  .flights-table tr:nth-child(even), .controllers-table tr:nth-child(even) { 
-    background-color: #313131;
-  }
+.flights-table tr:nth-child(even), .controllers-table tr:nth-child(even) { 
+  background-color: #313131;
+}
 
-  .flights-table tr:hover, .controllers-table tr:hover {
-    background-color: #414141;
-  }
+.flights-table tr:hover, .controllers-table tr:hover {
+  background-color: #414141;
+}
 
 .marquee {
   position: relative;
@@ -155,21 +160,52 @@
   font-size: 1.2rem;
 }
 
-	@font-face {
-    font-family: '10mal12Lampen';
-    src: url('10mal12Lampen.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+@font-face {
+  font-family: '10mal12Lampen';
+  src: url('10mal12Lampen.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 .flights-table, .controllers-table {
-    font-family: '10mal12Lampen', sans-serif;
-    color: orange;
+  font-family: '10mal12Lampen', sans-serif;
+  color: orange;
+}
+
+@keyframes sweetShadow {
+  from {
+    text-shadow: 0px 0px 10px orange, 
+                 0px 0px 20px orange,
+                 0px 0px 30px orange,
+                 0px 0px 40px orange;
+  }
+  to {
+    text-shadow: 0px 0px 20px orange,
+                 0px 0px 30px orange,
+                 0px 0px 40px orange,
+                 0px 0px 50px orange,
+                 0px 0px 60px orange;
+  }
+}
+
+@keyframes sweetShadowYellow {
+  from {
+    text-shadow: 0px 0px 10px #ffdd00, 
+                 0px 0px 20px #ffdd00,
+                 0px 0px 30px #ffdd00,
+                 0px 0px 40px #ffdd00;
+  }
+  to {
+    text-shadow: 0px 0px 20px #ffdd00,
+                 0px 0px 30px #ffdd00,
+                 0px 0px 40px #ffdd00,
+                 0px 0px 50px #ffdd00,
+                 0px 0px 60px #ffdd00;
+  }
 }
 
 </style>
-
 
 </head>
 <body>
