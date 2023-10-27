@@ -4,18 +4,21 @@
   <title>VATSIM Flights in Russia</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
+  * {
+    box-sizing: border-box;
+  }
+
   body { 
-    background-color: #000; 
-    color: #fff;
-    font-family: 'Courier New', monospace; 
+    background-color: #212121;
+    color: #0f0;
     margin: 0; 
     padding: 0; 
     line-height: 1.5;
+    font-family: 'Plex Mono', monospace; 
   } 
 
   h1 { 
-    background-color: #000; 
-    color: #fff; 
+    color: #0f0;
     padding: 20px 0; 
     text-align: center; 
     margin: 0; 
@@ -25,10 +28,11 @@
   .flights-table, .controllers-table { 
     width: 100%;
     margin: 20px auto; 
-    table-layout: fixed; 
-    border-collapse: collapse; 
+    border-collapse: collapse;
     color: #0f0;
-    background-color: #000;
+    background-color: #212121;
+    overflow-x: auto;
+    font-size: 1rem;
   }
 
   #tables-container {
@@ -36,6 +40,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    width: 90%;
+    margin: 0 auto;
   }
 
 #controllers-container, #stats-container {
@@ -52,81 +59,97 @@
 }
 
   .flights-table th, .flights-table td, .controllers-table th, .controllers-table td { 
-    border: 1px solid #999; 
-    padding: 15px; 
+    border: 1px solid #0f0;
+    padding: 10px; 
     text-align: center; 
     overflow: hidden; 
     text-overflow: ellipsis; 
     white-space: nowrap; 
     cursor: pointer;
-    font-size: 18px; 
+    font-size: 1rem;
   } 
 
   .flights-table caption, .controllers-table caption { 
-    border: 1px solid #999; 
-    padding: 15px; 
+    border: 1px solid #0f0;
+    padding: 10px; 
     text-align: center; 
     overflow: hidden; 
     text-overflow: ellipsis; 
     white-space: nowrap; 
 	font-weight: bold;
     cursor: pointer;
-    font-size: 2rem;
+    font-size: 1.2rem;
   } 
 
   .flights-table th, .controllers-table th, .flights-table caption, .controllers-table caption { 
-    background-color: #000; 
+    background-color: #212121; 
     color: #0f0; 
   } 
 
   .flights-table tr:nth-child(even), .controllers-table tr:nth-child(even) { 
-    background-color: #111;
+    background-color: #313131;
   }
 
   .flights-table tr:hover, .controllers-table tr:hover {
-    background-color: #222;
+    background-color: #414141;
   }
 
-  .flights-stats {
-    color: #0f0;
-    background-color: #000;
-    border: 1px solid #999;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 20px;
-    width: 100%; 
-    max-width: 700px; 
-    overflow-x: auto; 
-    overflow-y: visible; 
-  }
+.marquee {
+  position: relative;
+  overflow: hidden;
+  --offset: 20em;
+  --move-initial: calc(-25% + var(--offset));
+  --move-final: calc(-50% + var(--offset));
+  color: #0f0;
+  text-align: center;
+}
 
-  .flights-stats p {
-    margin: 5px 0;
-    font-size: 18px;
-  }
+.marquee span {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  transform: translateX(var(--move-initial));
+  animation: marquee 15s linear infinite;
+}
 
-  .flights-stats h2 {
-    font-size: 24px;
-    margin: 0;
+@keyframes marquee {
+  0% {
+    transform: translateX(var(--move-initial));
   }
-
-  .alert {
-    color: #f00;
-    font-size: 1.2rem;
+  100% {
+    transform: translateX(var(--move-final));
   }
+}
 
-  /* Добавления для эффекта маятника */
-  @keyframes blink {  
-    0% { color: #0f0; }
-    50% { color: transparent; }
-    100% { color: #0f0; }
-  }
+.flights-stats {
+  color: #0f0;
+  background-color: #212121;
+  border: 1px solid #0f0;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 20px;
+  width: 100%; 
+  max-width: 700px; 
+  overflow-x: auto; 
+  overflow-y: visible; 
+}
 
-  .blink {
-    animation: blink 1s linear infinite;
-  }
+.flights-stats p {
+  margin: 5px 0;
+  font-size: 18px;
+}
 
+.flights-stats h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.alert {
+  color: #f00;
+  font-size: 1.2rem;
+}
 </style>
+
 
 </head>
 <body>
