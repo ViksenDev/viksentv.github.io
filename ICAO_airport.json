@@ -62,7 +62,7 @@
     "UHSM": "Mendeleyevo ",
     "UHSO": "Zonalnoye ",
     "UHSS": "Yuzhno-Sakhalinsk ",
-    "UHWW": "Vladivostok )",
+    "UHWW": "Vladivostok",
     "UIAA": "Kadala ",
     "UIBB": "Bratsk ",
     "UIBS": "Ust-Ilimsk ",
@@ -257,5 +257,6 @@
     "UUBC": "Grabtsevo",
     "USSE": "Severouralsk",
     "USMQ": "Yamburg",
-    "UWSG": "Gagarin"
+    "UWSG": "Gagarin",
+    "UUBL": "Semyazino"
 }
