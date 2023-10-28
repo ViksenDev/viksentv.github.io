@@ -379,7 +379,7 @@ var top3DepartureAirports = Object.entries(allAirports.departures)
     .map(([aircraft, count]) => {
         // Заменить код самолета на имя, если имя существует в aircraftReplace 
         aircraft = aircraftReplace[aircraft] ? aircraftReplace[aircraft] : aircraft; 
-        return `${aircraft} (${count} pilots)`;
+        return `${aircraft} (${count})`;
     });
 
 
