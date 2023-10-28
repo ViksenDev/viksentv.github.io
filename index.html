@@ -29,13 +29,31 @@ body {
     font-family: 'led_stadion'; /* Применяем новый шрифт ко всем элементам */
     color: #000000; /* Измененный цвет шрифта */
 }
-    h1 {
-        color: #000000;
-        padding: 20px 0;
-        text-align: center;
-        margin: 0;
-        font-size: 4rem; /* Увеличенный размер шрифта*/
-    }
+nav {
+  padding: 16px 0;
+  background-color: #199BCA;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+nav ul li {
+display: inline-block;
+  margin-left: 10px;
+  text-transform: uppercase;
+}
+nav ul li:first-child {
+  margin-left: 0px;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
 
 /* Определение анимации */
 @keyframes flash {
@@ -190,7 +208,17 @@ body {
 
 </head>
 <body>
-  <h1>VATSIM Flights in Russia</h1>
+  <nav>
+    <ul>
+      <li><a href="">Страница-1</a></li>
+      <li><a href="">Страница-2</a></li>
+      <li><a href="">Страница-3</a></li>
+      <li><a href="">Страница-4</a></li>
+      <li><a href="">Страница-5</a></li>
+      <li><a href="">Страница-6</a></li>
+      <li><a href="">Страница-7</a></li>
+    </ul>
+  </nav>
 
 <div class="site-content">
     <div id="tables-container">
