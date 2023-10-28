@@ -399,7 +399,7 @@ var topAirlines = topAirlines.map((airlineCountString) => {
         allAirports.departures[departureAirport] = (allAirports.departures[departureAirport] || 0) + 1;
         allAirports.arrivals[arrivalAirport] = (allAirports.arrivals[arrivalAirport] || 0) + 1;
     });
-
+      }
     function top3Dict(dict) {
         return Object.entries(dict)
             .sort((a, b) => b[1] - a[1])
