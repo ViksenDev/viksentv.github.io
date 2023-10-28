@@ -231,16 +231,10 @@ body {
       <li><a href="">Flights</a></li>
       <li><a href="https://dispatch.simbrief.com/options/new" target="_blank">Dispatch</a></li>
       <li><a href="https://my.vatsim.net/pilots/flightplan" target="_blank">Flight Plan</a></li>
-      <li><a href="#" onclick="showSignInForm()">Sign In</a></li>
+      <li><a href="LK.html">Sign In</a></li>
     </ul>
 </nav>
 
-    <div id="sign-in-form" style="display: none;">
-        <h2>Enter CID to Sign In</h2>
-        <input type="text" id="cid-input">
-        <button onclick="confirmCID()">Confirm</button>
-    </div>
-	
 <div class="site-content">
     <div id="tables-container">
         <div id="stats-container"></div>
@@ -285,24 +279,6 @@ body {
 
 var controllersData = [];
 
-        function showSignInForm() {
-            var signInForm = document.getElementById('sign-in-form');
-            signInForm.style.display = 'block';
-        }
-
-        function confirmCID() {
-            var cidInput = document.getElementById('cid-input');
-            var cid = cidInput.value;
-            
-            // You can add validation logic for CID here if needed.
-            
-            if (cid) {
-                window.location.href = 'LK.html'; // Redirect to LK.html
-            } else {
-                alert('Please enter a valid CID');
-            }
-        }
-	    
 function getFlightsData() { 
   return $.get('https://data.vatsim.net/v3/vatsim-data.json').then(function(data) {
     flightsData = data.pilots;
