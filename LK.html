@@ -12,7 +12,50 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* Основные стили для навигационного хедера */
+nav {
+  background-color: rgba(0, 0, 255, 0.5); /* Полупрозрачный синий фон */
+  display: flex; /* Горизонтальное расположение элементов */
+  align-items: center; /* Выравнивание по вертикали */
+  padding: 10px; /* Поля вокруг хедера */
+}
+
+/* Стили для логотипа */
+.logo {
+  flex: 1; /* Логотип занимает доступное пространство слева */
+  align-content: left;
+}
+
+.logo img {
+  max-width: 100px; /* Максимальная ширина логотипа */
+  height: auto;
+}
+
+/* Стили для навигационного меню */
+.nav {
+  list-style: none; /* Убираем маркеры списка */
+  margin: 0; /* Убираем отступы сверху и снизу */
+  padding: 0; /* Убираем отступы слева и справа */
+  display: flex; /* Горизонтальное расположение элементов */
+}
+
+.nav li {
+  margin-right: 20px; /* Расстояние между пунктами меню */
+}
+
+.nav a {
+  text-decoration: none; /* Убираем подчеркивание ссылок */
+  color: #fff; /* Цвет текста кнопок */
+}
 	
+.site-title {
+  font-size: 48px; /* Задайте размер шрифта по вашему усмотрению */
+  text-align: center; /* Центрируем текст заголовка */
+  align-content: center;
+  flex: 1; /* Логотип занимает доступное пространство слева */
+}
+	    
 body {
   background-image: url(P-9b.jpg);
   background-repeat: no-repeat;
