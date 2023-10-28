@@ -224,15 +224,22 @@ body {
 <body style="margin:0px"></body>
 <nav>
     <div class="logo">
-      <img src="favicon.png" alt="Logo image">
+        <img src="favicon.png" alt="Logo image">
     </div>
     <h1 class="site-title">Vatstats: Russia</h1>
     <ul class="nav">
-      <li><a href="">Flights</a></li>
-      <li><a href="https://dispatch.simbrief.com/options/new" target="_blank">Dispatch</a></li>
-      <li><a href="https://my.vatsim.net/pilots/flightplan" target="_blank">Flight Plan</a></li>
-      <li><a href="events.html">Events</a></li>
+        <li><a href="">Flights</a></li>
+        <li><a href="https://dispatch.simbrief.com/options/new" target="_blank">Dispatch</a></li>
+        <li><a href="https://my.vatsim.net/pilots/flightplan" target="_blank">Flight Plan</a></li>
+        <li><a href="https://map.vatsim.net/events" target="_blank">Events</a></li>
     </ul>
+    <label for="icaoInput">Введите ICAO код аэропорта:</label>
+    <input type="text" id="icaoInput" placeholder="Пример: KJFK" />
+    <button id="fetchMETAR">Запросить METAR</button>
+    <div id="metarDisplay">
+        <h2>METAR Данные:</h2>
+        <pre id="metarText"></pre>
+    </div>
 </nav>
 
 <div class="site-content">
@@ -439,7 +446,32 @@ var top3DepartureAirports = Object.entries(allAirports.departures)
 
 setInterval(renderStats, 15000);
 
+function fetchMETARData() {
+    // Получаем значение ICAO кода из поля ввода
+    const icaoInput = document.getElementById("icaoInput");
+    const icao = icaoInput.value;
+    if (!icao) {
+        alert("Пожалуйста, введите ICAO код аэропорта.");
+        return;
+    }
 
+    // Формируем URL для запроса METAR данных
+    const metarUrl = "https://metar.vatsim.net/" + icao;
+
+    // Отправляем запрос на сервер
+    fetch(metarUrl)
+        .then(response => response.text())
+        .then(data => {
+            // Отображаем полученные METAR данные в виджете
+            const metarText = document.getElementById("metarText");
+            metarText.textContent = data;
+        })
+        .catch(error => {
+            alert("Произошла ошибка при запросе METAR данных: " + error);
+        });
+}
+
+document.getElementById("fetchMETAR").addEventListener("click", fetchMETARData);
 	
       function getTop3(array) {
   var counts = {};
