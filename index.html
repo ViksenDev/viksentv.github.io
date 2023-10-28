@@ -81,19 +81,6 @@ body {
     animation: flash 1.2s;
 }
 
-/* Style for the METAR widget */
-.metar-widget {
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.metar-widget:hover {
-    background-color: #2980b9;
-}
 	
 .flights-table {
     width: 100%;
@@ -246,13 +233,6 @@ body {
         <li><a href="https://my.vatsim.net/pilots/flightplan" target="_blank">Flight Plan</a></li>
         <li><a href="https://map.vatsim.net/events" target="_blank">Events</a></li>
     </ul>
-    <label for="icaoInput"></label>
-    <input type="text" id="icaoInput" placeholder="Example: URSS" />
-    <button id="fetchMETAR" class="metar-widget">METAR</button>
-    <div id="metarDisplay" class="metar-widget">
-        <h2> <br /> </h2>
-        <pre id="metarText"></pre>
-    </div>
 </nav>
 
 <div class="site-content">
@@ -324,7 +304,11 @@ function getFlightsData() {
 // функция для отбора У-диспетчеров
 function filterControllersByPrefix() {
   controllersData = controllersData.filter(function(controller) {
-    return controller.callsign.startsWith('U') && controller.callsign.length === 8;
+    return (
+      controller.callsign.startsWith('U') &&
+      controller.callsign.length === 8 &&
+      controller.callsign.charAt(4) === '_'
+    );
   });
 }
 
@@ -458,33 +442,6 @@ var top3DepartureAirports = Object.entries(allAirports.departures)
 }
 
 setInterval(renderStats, 15000);
-
-function fetchMETARData() {
-    // Получаем значение ICAO кода из поля ввода
-    const icaoInput = document.getElementById("icaoInput");
-    const icao = icaoInput.value;
-    if (!icao) {
-        alert("Пожалуйста, введите ICAO код аэропорта.");
-        return;
-    }
-
-    // Формируем URL для запроса METAR данных
-    const metarUrl = "https://metar.vatsim.net/" + icao;
-
-    // Отправляем запрос на сервер
-    fetch(metarUrl)
-        .then(response => response.text())
-        .then(data => {
-            // Отображаем полученные METAR данные в виджете
-            const metarText = document.getElementById("metarText");
-            metarText.textContent = data;
-        })
-        .catch(error => {
-            alert("Произошла ошибка при запросе METAR данных: " + error);
-        });
-}
-
-document.getElementById("fetchMETAR").addEventListener("click", fetchMETARData);
 	
       function getTop3(array) {
   var counts = {};
