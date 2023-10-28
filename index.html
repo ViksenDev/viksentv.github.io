@@ -40,14 +40,14 @@ body {
 /* Определение анимации */
 @keyframes flash {
   0%   {color: #000000;}
-  50%  {color: #FF8C00;}
+  50%  {color: #2F4F4F;}
   100% {color: #000000;}
 }
    /* Применение анимации к элементам таблицы */
 .flights-table td,
 .flights-stats p,
 .controllers-table td {
-    animation: flash 2s;
+    animation: flash 1.2s;
 }
 
 	
@@ -146,6 +146,10 @@ body {
 .flights-stats {
     color: #000000;
     background-color: transparent; /* замените белый цвет фона на прозрачный */
+    filter        : blur(10px);
+    -moz-filter   : blur(10px);
+    -webkit-filter: blur(10px);
+    -o-filter     : blur(10px);
     border: 1px solid #000000; /* Черный цвет границ блока со статистикой */
     border-radius: 5px;
     padding: 10px;
