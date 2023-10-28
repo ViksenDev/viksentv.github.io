@@ -317,8 +317,9 @@ function filterControllersByPrefix() {
   controllersData = controllersData.filter(function(controller) {
     return (
       controller.callsign.startsWith('U') &&
-      controller.callsign.length === 8 &&
-      controller.callsign.charAt(4) === '_'
+      controller.callsign.length >= 8 &&
+      controller.callsign.length <= 10 &&
+      controller.callsign.charAt(controller.callsign.length - 4) === '_'
     );
   });
 }
