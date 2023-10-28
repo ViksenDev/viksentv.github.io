@@ -111,7 +111,7 @@ body {
 
 .flights-table td, .controllers-table td {
     padding: 2px; /* Добавим отступы внутри ячеек */
-    text-align: center;
+    text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -425,7 +425,7 @@ function renderTable() {
     $('<th>').text('Departure').click(sortTableBy('departure')).appendTo(tableHeader);
     $('<th>').text('Arrival').click(sortTableBy('arrival')).appendTo(tableHeader);
     $('<th>').text('Aircraft').click(sortTableBy('aircraft_short')).appendTo(tableHeader);
-    $('<th>').text('Transponder').click(sortTableBy('transponder')).appendTo(tableHeader);
+    $('<th>').text('Squawk').click(sortTableBy('transponder')).appendTo(tableHeader);
     
     tableHeader.appendTo(table);
 
