@@ -390,6 +390,7 @@ var topAirlines = topAirlines.map((airlineCountString) => {
   var logoURL = airlineLogos[airlineCode] || "default_logo_url.png"; // Use a default logo if not found
   return `<div style="display: flex; align-items: center;"><img style="height: 1em;" src="${logoURL}" alt="${airlineCode}" /> ${airlineCountString}</div>`;
 });
+      }
     var allAirports = { departures: {}, arrivals: {} };
 
     flightsData.forEach(function (flight) {
@@ -399,7 +400,7 @@ var topAirlines = topAirlines.map((airlineCountString) => {
         allAirports.departures[departureAirport] = (allAirports.departures[departureAirport] || 0) + 1;
         allAirports.arrivals[arrivalAirport] = (allAirports.arrivals[arrivalAirport] || 0) + 1;
     });
-      }
+      
     function top3Dict(dict) {
         return Object.entries(dict)
             .sort((a, b) => b[1] - a[1])
